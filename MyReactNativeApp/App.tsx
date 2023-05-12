@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, SafeAreaView, StyleSheet } from 'react-native';
-import WebView from 'react-native-webview';
+import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
 const App = () => {
   const [showWebView, setShowWebView] = useState(false);
@@ -9,28 +9,47 @@ const App = () => {
     setShowWebView(!showWebView);
   };
 
+  const userId = 'user1';
+
+  const handleMessage = (event: WebViewMessageEvent) => {
+  try {
+    const message = JSON.parse(event.nativeEvent.data);
+
+    if (message.type === "finished_workout") {
+      console.log("Received data:", message.data);
+      // Process the received data as needed
+     
+    }
+    if (message.type === "exitApp"){
+      console.log("EXITING: ", "EXIT");
+      toggleWebView();
+    }
+  } catch (e) {
+    console.error("Could not parse JSON message from WebView:", e);
+  }
+};
+
   return (
     <SafeAreaView style={styles.container}>
       {!showWebView && (
         <Button title="Open WebView" onPress={toggleWebView} />
+        
       )}
       {showWebView && (
         <WebView
-          source={{ uri: 'https://kineste-x-w.vercel.app' }}
-          style={styles.webView}
-          allowsFullscreenVideo={true}
-          mediaPlaybackRequiresUserAction={false}
-          onMessage={(event) => {
-            if (event.nativeEvent.data === 'close') {
-              toggleWebView();
-            }
-          }}
-          javaScriptEnabled={true}
-          mixedContentMode="always"
-          allowFileAccessFromFileURLs={true}
-          allowUniversalAccessFromFileURLs={true}
-          allowsInlineMediaPlayback={true}
-          geolocationEnabled={true}
+          source={{ uri: `https://kineste-x-w.vercel.app?id=${userId}` }}
+         style={styles.webView}
+  allowsFullscreenVideo={true}
+  mediaPlaybackRequiresUserAction={false}
+  onMessage={handleMessage}
+  javaScriptEnabled={true}
+  originWhitelist={['*']}
+  mixedContentMode="always"
+  debuggingEnabled={true}
+  allowFileAccessFromFileURLs={true}
+  allowUniversalAccessFromFileURLs={true}
+  allowsInlineMediaPlayback={true}
+  geolocationEnabled={true}
         />
       )}
     </SafeAreaView>
