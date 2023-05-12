@@ -44,23 +44,31 @@ Import the WebView component and use it in your app:
 import WebView from 'react-native-webview';
 
 // ...
-<WebView
-  source={{ uri: 'https://kineste-x-w.vercel.app' }}
-  style={styles.webView}
-  allowsFullscreenVideo={true}
-  mediaPlaybackRequiresUserAction={false}
-  onMessage={(event) => {
-    if (event.nativeEvent.data === 'close') {
-      toggleWebView();
-    }
-  }}
-  javaScriptEnabled={true}
-  mixedContentMode="always"
-  allowFileAccessFromFileURLs={true}
-  allowUniversalAccessFromFileURLs={true}
-  allowsInlineMediaPlayback={true}
-  geolocationEnabled={true}
-/>
+ return (
+    <SafeAreaView style={styles.container}>
+      {!showWebView && (
+        <Button title="Open WebView" onPress={toggleWebView} />
+        
+      )}
+      {showWebView && (
+        <WebView
+          source={{ uri: `https://kineste-x-w.vercel.app?id=${userId}` }}
+          style={styles.webView}
+          allowsFullscreenVideo={true}
+          mediaPlaybackRequiresUserAction={false}
+          onMessage={handleMessage}
+          javaScriptEnabled={true}
+          originWhitelist={['*']}
+          mixedContentMode="always"
+          debuggingEnabled={true}
+          allowFileAccessFromFileURLs={true}
+          allowUniversalAccessFromFileURLs={true}
+          allowsInlineMediaPlayback={true}
+          geolocationEnabled={true}
+        />
+      )}
+    </SafeAreaView>
+  );
 // ...
 ```
 
@@ -73,7 +81,7 @@ const gender = 'male'; // Replace this with the actual gender from your data sou
 const weight = 70; // Replace this with the actual weight from your data source
 
 <WebView
-  source={{ uri: `https://myweb.vercel.app?id=${userId}&age=${age}&gender=${gender}&weight=${weight}` }}
+  source={{ uri: `https://myweb.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}` }}
   // ...other WebView props
 />
 ```
@@ -83,29 +91,55 @@ const weight = 70; // Replace this with the actual weight from your data source
 Add the following code to handle the exit event when the user clicks the exit button:
 
 ```jsx
-const handleMessage = (event) => {
-  const message = JSON.parse(event.nativeEvent.data);
-
-  if (message.type === "exit") {
-    console.log("Received data:", message.data);
-    // Process the received data as needed
-    toggleWebView();
+ const handleMessage = (event: WebViewMessageEvent) => {
+  try {
+    const message = JSON.parse(event.nativeEvent.data);
+    //finished the workout and now redirected to the all workouts section
+    if (message.type === "finished_workout") {
+      console.log("Received data:", message.data);
+      // Process the received data as needed
+     
+    }
+   
+    if (message.type === "exitApp"){
+      //clicked on exit, so handle the exit flow by removing WebView 
+      toggleWebView();
+    }
+  } catch (e) {
+    console.error("Could not parse JSON message from WebView:", e);
   }
 };
 
 // ...
-<WebView
-  source={{ uri: 'https://kineste-x-w.vercel.app' }}
-  style={styles.webView}
-  allowsFullscreenVideo={true}
-  mediaPlaybackRequiresUserAction={false}
-  onMessage={handleMessage}
-  // ...other props
-/>
+ return (
+    <SafeAreaView style={styles.container}>
+      {!showWebView && (
+        <Button title="Open WebView" onPress={toggleWebView} />
+        
+      )}
+      {showWebView && (
+        <WebView
+          source={{ uri: `https://kineste-x-w.vercel.app?id=${userId}` }}
+          style={styles.webView}
+          allowsFullscreenVideo={true}
+          mediaPlaybackRequiresUserAction={false}
+          onMessage={handleMessage}
+          javaScriptEnabled={true}
+          originWhitelist={['*']}
+          mixedContentMode="always"
+          debuggingEnabled={true}
+          allowFileAccessFromFileURLs={true}
+          allowUniversalAccessFromFileURLs={true}
+          allowsInlineMediaPlayback={true}
+          geolocationEnabled={true}
+        />
+      )}
+    </SafeAreaView>
+  );
 // ...
 ```
 
-All workout data will be sent when the user clicks the exit button. The data will also be stored in our database and made available to your app in real-time.
+All workout data will be sent when the user clicks the exit button. The data will also be stored in our database and can be made available to your app in real-time upon request (in case the user exited the flow incorrectly or something unexpected happened, we can discuss use cases)
 
 Please note that some parts are under development and testing. Contact vladimir@kinestex.com to schedule a demo and try out a beta version of KinesteX. We would appreciate any feedback!
 ```
