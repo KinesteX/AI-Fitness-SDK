@@ -75,13 +75,18 @@ import WebView from 'react-native-webview';
 To include additional data, such as user ID, age, gender, and weight, update the `uri` prop as shown below:
 
 ```jsx
-const userId = '12232dcdd'; // Replace this with the actual user ID from your data source
+const userId = '123abcd'; // Replace this with the actual user ID from your data source
 const age = 25; // Replace this with the actual age from your data source
 const gender = 'male'; // Replace this with the actual gender from your data source
 const weight = 70; // Replace this with the actual weight from your data source
+const sub_category = 'Stay Fit'; // Replace this with the actual sub_category (You can pass multiple sub categories, 
+//ex: sub_category = 'Stay Fit, Knee Therapy'
+const category = 'Rehabilitation'; // Replace this with the actual category
+const goals = 'Weight Management'; // Replace this with the actual goal 
+// multiple goals ex:  goals = 'Weight Management, Mental Health'
 
 <WebView
-  source={{ uri: `https://myweb.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}` }}
+  source={{ uri: `https://myweb.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=$category}` }}
   // ...other WebView props
 />
 ```
@@ -101,9 +106,22 @@ Add the following code to handle the exit event when the user clicks the exit bu
      
     }
    
+   
     if (message.type === "exitApp"){
       //clicked on exit, so handle the exit flow by removing WebView 
       toggleWebView();
+    }
+       if (message.type === "error_occured") {
+       // saved workout data in case of an error that causes ui freeze
+      console.log("Received data:", message.data);
+      // close the webview 
+          toggleWebView();
+    }
+    if (message.type === "exercise_completed") {
+      // (Optional)
+      // saved exercise data in case you want to cache the data of each exercise
+      console.log("Received data:", message.data);
+      // Example format: exercise: "Overhead Arms Raise", repeats: 20, timeSpent: 30, calories: 5.0
     }
   } catch (e) {
     console.error("Could not parse JSON message from WebView:", e);
