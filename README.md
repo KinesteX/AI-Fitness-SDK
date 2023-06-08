@@ -137,7 +137,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
       )}
       {showWebView && (
         <WebView
-          source={{ uri: `https://kineste-x-w.vercel.app?id=${userId}` }}
+          source={{ uri: `https://kineste-x-w.vercel.app/?userId=${userId}` }}
           style={styles.webView}
           allowsFullscreenVideo={true}
           mediaPlaybackRequiresUserAction={false}
