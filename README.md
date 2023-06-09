@@ -35,10 +35,13 @@ Add the following keys for camera and microphone usage:
 ```
 
 ## Available categories and sub categories to sort workouts: 
+```
+The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category you 
+```
 | **Category** | **Sub-category** |
 | --- | --- |
-| **Fitness** | Stay Fit; Stretching; Cardio |
-| **Rehabilitation** | Back Relief; Knee Therapy; Neck Relief |
+| **Fitness** | Stay%20Fit | Stretching | Cardio |
+| **Rehabilitation** | Back%20Relief | Knee%20Therapy | Neck%20Relief |
 
 ## Usage React Native
 
@@ -84,10 +87,10 @@ const userId = '123abcd'; // Replace this with the actual user ID from your data
 const age = 25; // Replace this with the actual age from your data source
 const gender = 'male'; // Replace this with the actual gender from your data source
 const weight = 70; // Replace this with the actual weight from your data source
-const sub_category = 'Stay Fit'; // Replace this with the actual sub_category (You can pass multiple sub categories, 
-//ex: sub_category = 'Stay Fit, Knee Therapy'
-const category = 'Rehabilitation'; // Replace this with the actual category
-const goals = 'Weight Management'; // Replace this with the actual goal 
+const sub_category = 'Stay%20Fit'; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
+//ex: sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
+const category = 'Fitness'; // You can only have one category
+const goals = 'Weight Management'; // Replace this with the actual goal (COMING SOON)
 // multiple goals ex:  goals = 'Weight Management, Mental Health'
 
 <WebView
