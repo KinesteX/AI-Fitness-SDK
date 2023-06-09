@@ -104,6 +104,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
     if (message.type === "finished_workout") {
       console.log("Received data:", message.data);
       // Process the received data as needed
+    /*
     Format:
     {
     date = "2023-06-09T17:27:24.324Z";
@@ -113,7 +114,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
     userId = "123abcd";
     workout = "Fitness Lite";
     }
-    
+    */
     }
    
     if (message.type === "exitApp"){
