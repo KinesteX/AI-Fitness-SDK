@@ -36,12 +36,12 @@ Add the following keys for camera and microphone usage:
 
 ## Available categories and sub categories to sort workouts: 
 ```
-The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category you 
+The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
 ```
 | **Category** | **Sub-category** |
 | --- | --- |
-| **Fitness** | Stay%20Fit | Stretching | Cardio |
-| **Rehabilitation** | Back%20Relief | Knee%20Therapy | Neck%20Relief |
+| **Fitness** | Stay%20Fit, Stretching, Cardio |
+| **Rehabilitation** | Back%20Relief, Knee%20Therapy, Neck%20Relief |
 
 ## Usage React Native
 
