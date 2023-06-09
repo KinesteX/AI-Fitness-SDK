@@ -144,7 +144,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
       exercise: "Overhead Arms Raise";
       repeats: 20;
       timeSpent: 30;
-      calories: 5.0;
+      calories: "5.0";
       }
       */
 
