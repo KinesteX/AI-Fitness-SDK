@@ -34,6 +34,12 @@ Add the following keys for camera and microphone usage:
 <string>Microphone access is required for video streaming.</string>
 ```
 
+## Available categories and sub categories to sort workouts: 
+| **Category** | **Sub-category** |
+| --- | --- |
+| **Fitness** | Stay Fit; Stretching; Cardio |
+| **Rehabilitation** | Back Relief; Knee Therapy; Neck Relief |
+
 ## Usage React Native
 
 ### App.tsx or App.js
@@ -72,14 +78,7 @@ import WebView from 'react-native-webview';
 // ...
 ```
 
-
 To include additional data, such as user ID, age, gender, and weight, update the `uri` prop as shown below:
-## Available categories and sub categories: 
-| **Category** | **Sub-category** |
-| --- | --- |
-| **Fitness** | Stay Fit; Stretching; Cardio |
-| **Rehabilitation** | Back Relief; Knee Therapy; Neck Relief |
-
 ```jsx
 const userId = '123abcd'; // Replace this with the actual user ID from your data source
 const age = 25; // Replace this with the actual age from your data source
