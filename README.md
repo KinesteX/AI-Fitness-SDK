@@ -106,7 +106,6 @@ Add the following code to handle the exit event when the user clicks the exit bu
      
     }
    
-   
     if (message.type === "exitApp"){
       //clicked on exit, so handle the exit flow by removing WebView 
       toggleWebView();
@@ -156,6 +155,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
   );
 // ...
 ```
+
 ## Usage iOS native (SwiftUI)
 
 1. Make sure to configure necessary Info.plist properties 
