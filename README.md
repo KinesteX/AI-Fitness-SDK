@@ -74,6 +74,7 @@ import WebView from 'react-native-webview';
 
 To include additional data, such as user ID, age, gender, and weight, update the `uri` prop as shown below:
 
+
 ```jsx
 const userId = '123abcd'; // Replace this with the actual user ID from your data source
 const age = 25; // Replace this with the actual age from your data source
@@ -103,7 +104,16 @@ Add the following code to handle the exit event when the user clicks the exit bu
     if (message.type === "finished_workout") {
       console.log("Received data:", message.data);
       // Process the received data as needed
-     
+    Format:
+    {
+    date = "2023-06-09T17:27:24.324Z";
+    totalCalories = 0;
+    totalRepeats = 0;
+    totalSeconds = 0;
+    userId = "123abcd";
+    workout = "Fitness Lite";
+    }
+    
     }
    
     if (message.type === "exitApp"){
