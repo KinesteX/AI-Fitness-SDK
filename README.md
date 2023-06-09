@@ -72,8 +72,13 @@ import WebView from 'react-native-webview';
 // ...
 ```
 
-To include additional data, such as user ID, age, gender, and weight, update the `uri` prop as shown below:
 
+To include additional data, such as user ID, age, gender, and weight, update the `uri` prop as shown below:
+## Available categories and sub categories: 
+| **Category** | **Sub-category** |
+| --- | --- |
+| **Fitness** | Stay Fit; Stretching; Cardio |
+| **Rehabilitation** | Back Relief; Knee Therapy; Neck Relief |
 
 ```jsx
 const userId = '123abcd'; // Replace this with the actual user ID from your data source
@@ -103,18 +108,18 @@ Add the following code to handle the exit event when the user clicks the exit bu
     //finished the workout and now redirected to the all workouts section
     if (message.type === "finished_workout") {
       console.log("Received data:", message.data);
-      // Process the received data as needed
     /*
-    Format:
+    Format of the Received data:
     {
-    date = "2023-06-09T17:27:24.324Z";
-    totalCalories = 0;
-    totalRepeats = 0;
-    totalSeconds = 0;
-    userId = "123abcd";
+    date = "2023-06-09T17:34:49.426Z";
+    totalCalories = "0.96";
+    totalRepeats = 3;
+    totalSeconds = 18;
+    userId = 123abcd;
     workout = "Fitness Lite";
     }
     */
+    
     }
    
     if (message.type === "exitApp"){
@@ -130,8 +135,17 @@ Add the following code to handle the exit event when the user clicks the exit bu
     if (message.type === "exercise_completed") {
       // (Optional)
       // saved exercise data in case you want to cache the data of each exercise
-      console.log("Received data:", message.data);
-      // Example format: exercise: "Overhead Arms Raise", repeats: 20, timeSpent: 30, calories: 5.0
+      console.log("Received data:", message.data);  
+      /*
+      Format:
+      {
+      exercise: "Overhead Arms Raise";
+      repeats: 20;
+      timeSpent: 30;
+      calories: 5.0;
+      }
+      */
+
     }
   } catch (e) {
     console.error("Could not parse JSON message from WebView:", e);
