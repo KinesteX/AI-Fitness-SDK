@@ -324,6 +324,119 @@ struct ContentView: View {
 ```
 
 
+## Usage React Progressive Web App:
+
+Parameters:
+```
+  const [showWebView, setShowWebView] = useState(false);
+  const toggleWebView = () => setShowWebView(!showWebView);
+
+ const userId = '123abcd'; // Replace this with the actual user ID from your data source
+const age = 25; // Replace this with the actual age from your data source
+const gender = 'male'; // Replace this with the actual gender from your data source
+const weight = 70; // Replace this with the actual weight from your data source
+const sub_category = 'Stay%20Fit'; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
+//ex: sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
+const category = 'Fitness'; // You can only have one category
+const goals = 'Weight Management'; // Replace this with the actual goal (COMING SOON)
+// multiple goals ex:  goals = 'Weight Management, Mental Health'
+```
+
+Handling postMessages from KinesteX:
+```
+const handleMessage = (event) => {
+    try {
+      if (event.data) {
+        const message = JSON.parse(event.data);
+  
+        console.log('Received data:', message); // Log the received data
+  
+        if (message.type === 'finished_workout') {
+          console.log('Received data:', message.data);
+          /*
+          Format of the Received data:
+          {
+            date: "2023-06-09T17:34:49.426Z",
+            totalCalories: "0.96",
+            totalRepeats: 3,
+            totalSeconds: 18,
+            userId: "123abcd",
+            workout: "Fitness Lite"
+          }
+          */
+        }
+        if (message.type === 'exitApp') {
+          toggleWebView();
+        }
+        if (message.type === 'error_occured') {
+          console.log('Received data:', message.data);
+          toggleWebView();
+        }
+        if (message.type === 'exercise_completed') {
+          console.log('Received data:', message.data);
+          /*
+          Format:
+          {
+            exercise: "Overhead Arms Raise",
+            repeats: 20,
+            timeSpent: 30,
+            calories: "5.0"
+          }
+          */
+        }
+      } else {
+        console.log('Received empty message'); // Log if the message is empty
+      }
+    } catch (e) {
+      console.error('Could not parse JSON message from WebView:', e);
+    }
+  };
+  
+  useEffect(() => {
+    const handleWindowMessage = (event) => {
+      handleMessage(event);
+    };
+
+    window.addEventListener('message', handleWindowMessage);
+
+    return () => {
+      window.removeEventListener('message', handleWindowMessage);
+    };
+  }, [toggleWebView]); // <- Add toggleWebView here
+
+```
+
+Displaying KinesteX:
+```
+   {showWebView && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+            zIndex: '0',
+          }}
+        >
+          <iframe
+            src={`https://kineste-x-w.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=${category}`}
+            frameBorder="0"
+            allow="camera; microphone; autoplay"
+            sandbox="allow-same-origin allow-scripts"
+            allowFullScreen={true}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          ></iframe>
+        </div>
+      )}
+```
+
+See PWA-KinesteX for a demo code
+
+
 All workout data will be sent when the user clicks the exit button. The data will also be stored in our database and can be made available to your app in real-time upon request (in case the user exited the flow incorrectly or something unexpected happened, we can discuss use cases)
 
 Please note that some parts are under development and testing. Contact vladimir@kinestex.com to schedule a demo and try out a beta version of KinesteX. We would appreciate any feedback!
