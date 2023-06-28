@@ -3,14 +3,6 @@
 
 This guide will walk you through the installation and configuration of the WebView component for integrating KinesteX workouts into your app.
 
-## Installation
-
-Install `react-native-webview`:
-
-```bash
-npm install react-native-webview
-```
-
 ## Configuration
 
 ### AndroidManifest.xml
@@ -60,7 +52,7 @@ goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
 ## Handling responses from KinesteX:
 Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
 
-  ```
+  ```jsx
     //finished the workout and now redirected to the all workouts section
     if (message.type === "finished_workout") {
       console.log("Received data:", message.data);
@@ -106,6 +98,14 @@ Currently supported communication is via web postMessages. You can add a listene
 
 
 ## Usage React Native
+
+### Installation
+
+Install `react-native-webview`:
+
+```bash
+npm install react-native-webview
+```
 
 ### App.tsx or App.js
 
