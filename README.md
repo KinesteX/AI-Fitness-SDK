@@ -46,6 +46,65 @@ The empty spaces in urls are formatted like this %20 so if you want to sort the 
 | **Fitness** | Stay%20Fit, Stretching, Cardio |
 | **Rehabilitation** | Back%20Relief, Knee%20Therapy, Neck%20Relief |
 
+## Available parameters:
+userId = "123abcd"; // Replace this with the actual user ID from your data source
+age = 25; // Replace this with the actual age from your data source
+gender = "male"; // Replace this with the actual gender from your data source
+weight = 70; // Replace this with the actual weight from your data source
+sub_category = "Stay%20Fit"; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
+//sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
+category = "Fitness"; // You can only have one category
+goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
+// multiple goals ex:  goals = 'Weight Management, Mental Health'
+
+## Handling responses from KinesteX:
+Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
+
+  ```
+    //finished the workout and now redirected to the all workouts section
+    if (message.type === "finished_workout") {
+      console.log("Received data:", message.data);
+    /*
+    Format of the Received data:
+    {
+    date = "2023-06-09T17:34:49.426Z";
+    totalCalories = "0.96";
+    totalRepeats = 3;
+    totalSeconds = 18;
+    userId = 123abcd;
+    workout = "Fitness Lite";
+    }
+    */
+    
+    }
+   
+    if (message.type === "exitApp"){
+      //clicked on exit, so handle the exit flow by removing WebView
+      
+    }
+       if (message.type === "error_occured") {
+       // saved workout data in case of an error that causes ui freeze
+      console.log("Received data:", message.data);
+     
+    }
+    if (message.type === "exercise_completed") {
+      // (Optional)
+      // saved exercise data in case you want to cache the data of each exercise
+      console.log("Received data:", message.data);  
+      /*
+      Format:
+      {
+      exercise: "Overhead Arms Raise";
+      repeats: 20;
+      timeSpent: 30;
+      calories: "5.0";
+      }
+      */
+
+    }
+```
+
+
 ## Usage React Native
 
 ### App.tsx or App.js
