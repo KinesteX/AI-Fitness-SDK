@@ -249,7 +249,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
 
 1. Make sure to configure necessary Info.plist properties 
 
-```
+```xml
 <key>NSCameraUsageDescription</key>
 <string>Camera access is required for video streaming.</string>
 <key>NSMicrophoneUsageDescription</key>
@@ -258,7 +258,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
 
 2. Create a WebView UIViewRepresentable to show our workout collection: 
 
-```
+```swift
 import SwiftUI
 import WebKit
 
@@ -315,7 +315,7 @@ struct WebView: UIViewRepresentable {
 ```
 
 3. Create a class that will handle incoming data: 
-```
+```swift
 import SwiftUI
 
 class ContentViewModel: ObservableObject {
@@ -357,7 +357,7 @@ class ContentViewModel: ObservableObject {
 
 ```
 Present the WebView and setup your url query params: 
-```
+```swiftui
 import SwiftUI
 
 struct ContentView: View {
@@ -389,7 +389,7 @@ struct ContentView: View {
 ## Usage React Progressive Web App:
 
 Parameters:
-```
+```jsx
   const [showWebView, setShowWebView] = useState(false);
   const toggleWebView = () => setShowWebView(!showWebView);
 
@@ -405,7 +405,7 @@ const goals = 'Weight Management'; // Replace this with the actual goal (COMING 
 ```
 
 Handling postMessages from KinesteX:
-```
+```jsx
 const handleMessage = (event) => {
     try {
       if (event.data) {
@@ -469,7 +469,7 @@ const handleMessage = (event) => {
 ```
 
 Displaying KinesteX:
-```
+```jsx
    {showWebView && (
         <div
           style={{
@@ -502,7 +502,7 @@ See PWA-KinesteX for a demo code
 ## Usage Flutter: 
 
 1. Add necessary permissions and libraries to AndroidManifest, Info.plist, and pubspec.yaml
-```
+```xml
 AndroidManifest.xml:
 
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -523,7 +523,7 @@ flutter_inappwebview: ^5.3.2
 ```
 
 2. Request camera access: 
-```
+```dart
 // Example usage: 
 Future<void> main() async {
 
@@ -545,7 +545,7 @@ Future<void> main() async {
 
 
 3. Specify parameters: 
-```
+```dart
 String url = "";
 String userId = "abc123";
 String category = "Fitness";
@@ -555,7 +555,7 @@ String category = "Fitness";
 ```
 4. Show Webview: 
 
-```
+```dart
 
 class _MyHomePageState extends State<MyHomePage> {
   String userId = "abc123";
