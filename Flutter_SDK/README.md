@@ -1,27 +1,108 @@
-## Usage Flutter: 
+## Configuration
 
-1. Add necessary permissions and libraries to AndroidManifest, Info.plist, and pubspec.yaml
+#### AndroidManifest.xml
+
+Add the following permissions for camera and microphone usage:
+
 ```xml
-AndroidManifest.xml:
-
-<uses-permission android:name="android.permission.INTERNET"/>
+<!-- Add this line inside the <manifest> tag -->
 <uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.VIDEO_CAPTURE" />
 
-Info.plist:
+```
 
+#### Info.plist
+
+Add the following keys for camera and microphone usage:
+
+```xml
 <key>NSCameraUsageDescription</key>
 <string>Camera access is required for video streaming.</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone access is required for video streaming.</string>
+```
+Add the following dependencies to pubsec.yaml:
 
-pubspec.yaml:
+```xml
 
 permission_handler: ^9.0.0
 flutter_inappwebview: ^5.3.2
 ```
 
-2. Request camera access: 
+### Available categories and sub categories to sort workouts: 
+
+The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
+
+| **Category** | **Sub-category** |
+| --- | --- |
+| **Fitness** | Stay%20Fit, Stretching, Cardio |
+| **Rehabilitation** | Back%20Relief, Knee%20Therapy, Neck%20Relief |
+
+## Available parameters:
+```jsx
+userId = "123abcd"; // Replace this with the actual user ID from your data source
+age = 25; // Replace this with the actual age from your data source
+gender = "male"; // Replace this with the actual gender from your data source
+weight = 70; // Replace this with the actual weight from your data source
+sub_category = "Stay%20Fit"; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
+//sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
+category = "Fitness"; // You can only have one category
+goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
+// multiple goals ex:  goals = 'Weight Management, Mental Health'
+```
+### Handling responses from KinesteX:
+Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
+
+  ```jsx
+    //finished the workout and now redirected to the all workouts section
+    if (message.type === "finished_workout") {
+      console.log("Received data:", message.data);
+    /*
+    Format of the Received data:
+    {
+    date = "2023-06-09T17:34:49.426Z";
+    totalCalories = "0.96";
+    totalRepeats = 3;
+    totalSeconds = 18;
+    userId = 123abcd;
+    workout = "Fitness Lite";
+    }
+    */
+    
+    }
+   
+    if (message.type === "exitApp"){
+      //clicked on exit, so handle the exit flow by removing WebView
+      
+    }
+       if (message.type === "error_occured") {
+       // saved workout data in case of an error that causes ui freeze
+      console.log("Received data:", message.data);
+     
+    }
+    if (message.type === "exercise_completed") {
+      // (Optional)
+      // saved exercise data in case you want to cache the data of each exercise
+      console.log("Received data:", message.data);  
+      /*
+      Format:
+      {
+      exercise: "Overhead Arms Raise";
+      repeats: 20;
+      timeSpent: 30;
+      calories: "5.0";
+      }
+      */
+
+    }
+```
+
+## Usage Flutter: 
+
+
+1. Request camera access: 
 ```dart
 // Example usage: 
 Future<void> main() async {
@@ -43,7 +124,7 @@ Future<void> main() async {
 ```
 
 
-3. Specify parameters: 
+2. Specify parameters: 
 ```dart
 String url = "";
 String userId = "abc123";
@@ -52,7 +133,7 @@ String category = "Fitness";
 // see other available parameters above
  
 ```
-4. Show Webview: 
+3. Show Webview: 
 
 ```dart
 
