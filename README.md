@@ -1,15 +1,15 @@
-```markdown
+
 # README for Git
 
 This guide will walk you through the installation and configuration of the WebView component for integrating KinesteX workouts into your app.
 
 ## Configuration
 
-### AndroidManifest.xml
+#### AndroidManifest.xml
 
 Add the following permissions for camera and microphone usage:
 
-```
+```xml
 <!-- Add this line inside the <manifest> tag -->
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -18,7 +18,7 @@ Add the following permissions for camera and microphone usage:
 
 ```
 
-### Info.plist
+#### Info.plist
 
 Add the following keys for camera and microphone usage:
 
@@ -29,10 +29,10 @@ Add the following keys for camera and microphone usage:
 <string>Microphone access is required for video streaming.</string>
 ```
 
-## Available categories and sub categories to sort workouts: 
-```
+### Available categories and sub categories to sort workouts: 
+
 The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
-```
+
 | **Category** | **Sub-category** |
 | --- | --- |
 | **Fitness** | Stay%20Fit, Stretching, Cardio |
@@ -50,7 +50,7 @@ category = "Fitness"; // You can only have one category
 goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
 // multiple goals ex:  goals = 'Weight Management, Mental Health'
 ```
-## Handling responses from KinesteX:
+### Handling responses from KinesteX:
 Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
 
   ```jsx
@@ -97,9 +97,8 @@ Currently supported communication is via web postMessages. You can add a listene
     }
 ```
 
-
+------------------
 ## Usage React Native
-
 ### Installation
 
 Install `react-native-webview`:
@@ -245,7 +244,7 @@ Add the following code to handle the exit event when the user clicks the exit bu
   );
 // ...
 ```
-
+------------------
 ## Usage iOS native (SwiftUI)
 
 1. Make sure to configure necessary Info.plist properties 
@@ -386,7 +385,7 @@ struct ContentView: View {
 
 ```
 
-
+------------------
 ## Usage React Progressive Web App:
 
 Parameters:
@@ -499,7 +498,7 @@ Displaying KinesteX:
 
 See PWA-KinesteX for a demo code
 
-
+------------------
 ## Usage Flutter: 
 
 1. Add necessary permissions and libraries to AndroidManifest, Info.plist, and pubspec.yaml
@@ -679,7 +678,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ```
 The demo app is called flutter_sdk. All code is in main.dart
-
+------------------
 
 
 All workout data will be sent when the user clicks the exit button. The data will also be stored in our database and can be made available to your app in real-time upon request (in case the user exited the flow incorrectly or something unexpected happened, we can discuss use cases)
