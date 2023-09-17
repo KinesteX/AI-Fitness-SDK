@@ -31,6 +31,17 @@ permission_handler: ^9.0.0
 flutter_inappwebview: ^5.3.2
 ```
 
+### Available categories to sort plans: 
+
+The empty spaces in urls are formatted like this %20 so if you want to sort the plan based on the category copy the category as specified below
+
+| **Plan Category** | 
+| --- | 
+| **Strength** | 
+| **Weight%20Management** | 
+| **Cardio** |
+| **Rehabilitation** | 
+
 ### Available categories and sub categories to sort workouts: 
 
 The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
@@ -51,6 +62,7 @@ sub_category = "Stay%20Fit"; //The spaces in url values have to have "%20" in th
 category = "Fitness"; // You can only have one category
 goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
 // multiple goals ex:  goals = 'Weight Management, Mental Health'
+
 ```
 ### Handling responses from KinesteX:
 Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
@@ -129,7 +141,7 @@ Future<void> main() async {
 String url = "";
 String userId = "abc123";
 String category = "Fitness";
-
+String planCategory = "Strength"; // for specifying required plan category
 // see other available parameters above
  
 ```
@@ -149,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    url = "https://kineste-x-w.vercel.app/?userId=$userId&category=$category";
+    url = "https://kineste-x-w.vercel.app/?userId=$userId&planC=$planCategory&category=$category";
 
     options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
