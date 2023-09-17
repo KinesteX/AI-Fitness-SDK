@@ -28,6 +28,16 @@ Add the following keys for camera and microphone usage:
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone access is required for video streaming.</string>
 ```
+### Available categories to sort plans: 
+
+The empty spaces in urls are formatted like this %20 so if you want to sort the plan based on the category copy the category as specified below
+
+| **Plan Category** | 
+| --- | 
+| **Strength** | 
+| **Weight%20Management** | 
+| **Cardio** |
+| **Rehabilitation** | 
 
 ### Available categories and sub categories to sort workouts: 
 
@@ -152,11 +162,12 @@ const weight = 70; // Replace this with the actual weight from your data source
 const sub_category = 'Stay%20Fit'; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
 //ex: sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
 const category = 'Fitness'; // You can only have one category
+const planC = 'Strength'; // Category for the plan
 const goals = 'Weight Management'; // Replace this with the actual goal (COMING SOON)
 // multiple goals ex:  goals = 'Weight Management, Mental Health'
 
 <WebView
-  source={{ uri: `https://myweb.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=$category}` }}
+  source={{ uri: `https://kineste-x-w.vercel.app?userId=${userId}&planC={planC}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=${categoryWorkout}` }}
   // ...other WebView props
 />
 ```
@@ -399,7 +410,8 @@ const gender = 'male'; // Replace this with the actual gender from your data sou
 const weight = 70; // Replace this with the actual weight from your data source
 const sub_category = 'Stay%20Fit'; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
 //ex: sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
-const category = 'Fitness'; // You can only have one category
+const categoryWorkout = 'Fitness'; // You can only have one category
+const planC = 'Strength'; // Category for the plan
 const goals = 'Weight Management'; // Replace this with the actual goal (COMING SOON)
 // multiple goals ex:  goals = 'Weight Management, Mental Health'
 ```
@@ -482,7 +494,7 @@ Displaying KinesteX:
           }}
         >
           <iframe
-            src={`https://kineste-x-w.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=${category}`}
+            src={`https://kineste-x-w.vercel.app?userId=${userId}&planC={planC}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=${categoryWorkout}`}
             frameBorder="0"
             allow="camera; microphone; autoplay"
             sandbox="allow-same-origin allow-scripts"
