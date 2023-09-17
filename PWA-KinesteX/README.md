@@ -39,6 +39,11 @@ The empty spaces in urls are formatted like this %20 so if you want to sort the 
 | **Cardio** |
 | **Rehabilitation** | 
 
+Example Cardio for planCategory (include ?planC={cateogry} in the link)
+
+<img width="858" alt="Screenshot 2023-09-16 at 8 16 49 PM" src="https://github.com/V-m1r/KinesteXSDK/assets/62508191/04e6dc52-69c2-4c64-8949-eb7b4f9687af">
+
+
 ### Available categories and sub categories to sort workouts: 
 
 The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
@@ -47,6 +52,10 @@ The empty spaces in urls are formatted like this %20 so if you want to sort the 
 | --- | --- |
 | **Fitness** | Stay%20Fit, Stretching, Cardio |
 | **Rehabilitation** | Back%20Relief, Knee%20Therapy, Neck%20Relief |
+
+Example (sorts only workouts, plans remain with Strength category by default)
+
+<img width="864" alt="Screenshot 2023-09-16 at 8 19 57 PM" src="https://github.com/V-m1r/KinesteXSDK/assets/62508191/a3d983da-92e1-45f1-a9a4-62d150ee7d97">
 
 ## Available parameters:
 ```jsx
