@@ -1,7 +1,7 @@
 
 # README for Git
 
-This guide will walk you through the installation and configuration of the WebView component for integrating KinesteX workouts into your app.
+This guide will walk you through the installation and configuration of the WebView component for integrating KinesteX plans and workouts into your app.
 
 ## Configuration
 
