@@ -31,241 +31,130 @@ permission_handler: ^9.0.0
 flutter_inappwebview: ^5.3.2
 ```
 
-### Available categories to sort plans: 
+### Available categories to sort plans (param key is planC): 
 
-The empty spaces in urls are formatted like this %20 so if you want to sort the plan based on the category copy the category as specified below
-
-| **Plan Category** | 
+| **Plan Category (key: planC)** | 
 | --- | 
 | **Strength** | 
-| **Weight%20Management** | 
 | **Cardio** |
 | **Rehabilitation** | 
 
 ### Available categories and sub categories to sort workouts: 
 
-The empty spaces in urls are formatted like this %20 so if you want to sort the workout based on the sub_category copy the sub _category as specified below
-
-| **Category** | **Sub-category** |
+| **Category (key: category)** | **Sub-category (key: sub_category)** |
 | --- | --- |
-| **Fitness** | Stay%20Fit, Stretching, Cardio |
-| **Rehabilitation** | Back%20Relief, Knee%20Therapy, Neck%20Relief |
+| **Fitness** | Stay Fit, Stretching, Cardio |
+| **Rehabilitation** | Back Relief, Knee Therapy, Neck Relief |
 
-## Available parameters:
-```jsx
-userId = "123abcd"; // Replace this with the actual user ID from your data source
-age = 25; // Replace this with the actual age from your data source
-gender = "male"; // Replace this with the actual gender from your data source
-weight = 70; // Replace this with the actual weight from your data source
-sub_category = "Stay%20Fit"; //The spaces in url values have to have "%20" in them (You can pass multiple sub categories, 
-//sub_category = 'Stay%20Fit,Knee%20Therapy,Cardio' (They have to be separated by a comma without a space) 
-category = "Fitness"; // You can only have one category
-goals = "Weight Management"; // Replace this with the actual goal (COMING SOON)
-// multiple goals ex:  goals = 'Weight Management, Mental Health'
+## WebView Camera Access in Flutter with KinesteX SDK
 
-```
-### Handling responses from KinesteX:
-Currently supported communication is via web postMessages. You can add a listener to the webview events. See specifications for your language below, but generally we let you know when user completes following events:
+This guide provides a detailed walkthrough of the Flutter code that integrates a web view with camera access and communicates with the KinesteX SDK. 
 
-  ```jsx
-    //finished the workout and now redirected to the all workouts section
-    if (message.type === "finished_workout") {
-      console.log("Received data:", message.data);
-    /*
-    Format of the Received data:
-    {
-    date = "2023-06-09T17:34:49.426Z";
-    totalCalories = "0.96";
-    totalRepeats = 3;
-    totalSeconds = 18;
-    userId = 123abcd;
-    workout = "Fitness Lite";
+### Initial Setup
+
+1. **Prerequisites**:
+    - Ensure you've added the necessary permissions in your `AndroidManifest.xml` and `Info.plist` for both Android and iOS respectively.
+    - Add the required dependencies in your `pubspec.yaml`.
+
+2. **App Initialization**:
+    - Before Starting KinesteX, please initialize essential widgets.
+    - Then checks and request for camera permission. In the demo code if permission is granted, the main application (`MyApp()`) runs, else it prints "Permission not granted".
+    ```dart
+    // similarly on button click you may check for permission before launching KinesteX. Please ensure you handle camera permissions accordingly
+    if (await Permission.camera.request() == PermissionStatus.granted) {
+        runApp(MyApp());
     }
-    */
+    ```
+
+### Main App Structure
+
+- The core of the app is `MyApp` which sets the `MyHomePage` as the home.
+
+### Home Page Overview
+
+1. **State Initialization**: 
+    - In `_MyHomePageState`, there's a setup of post data with required parameters like `userId`, `company`, and `key`.
+    - The `initState()` method initializes controllers for each post data entry and sets web view options.
+    ```dart
+    postData.forEach((key, value) {
+        controllers[key] = TextEditingController(text: value);
+    });
+    ```
+
+2. **Building the UI**: 
+    - The main UI is a `Scaffold` widget. Depending on the `showWebview` state, it either displays an `InAppWebView` or a data modification interface.
+    - If `showWebview` is true, the web view is displayed. This web view starts by loading a specified URL. JavaScript handlers are added to enable communication between the Flutter app and the web content.
+
+3. **Message Handling with `handleMessage`**: 
+    - This function is essential for processing messages received from the web content.
+    - It decodes the incoming message, and based on the message type, different actions are taken, and the `workoutLogs` list is updated.
     
-    }
-   
-    if (message.type === "exitApp"){
-      //clicked on exit, so handle the exit flow by removing WebView
-      
-    }
-       if (message.type === "error_occured") {
-       // saved workout data in case of an error that causes ui freeze
-      console.log("Received data:", message.data);
-     
-    }
-    if (message.type === "exercise_completed") {
-      // (Optional)
-      // saved exercise data in case you want to cache the data of each exercise
-      console.log("Received data:", message.data);  
-      /*
-      Format:
-      {
-      exercise: "Overhead Arms Raise";
-      repeats: 20;
-      timeSpent: 30;
-      calories: "5.0";
-      }
-      */
+Certainly! Let's delve deeper into the `handleMessage` and `postMessage` mechanisms within the context of the provided code.
 
-    }
-```
+### handleMessage Function:
 
-## Usage Flutter: 
+The `handleMessage` function is crucial for interpreting and acting upon messages received from the web content. These messages are primarily generated by the KinesteX SDK embedded within the WebView.
 
+#### Function Breakdown:
 
-1. Request camera access: 
-```dart
-// Example usage: 
-Future<void> main() async {
-
-  WidgetsFlutterBinding.ensureInitialized();
-// ensure that camera access is granted before opening the webview
- if (await Permission.camera.request() == PermissionStatus.granted) {
-
- runApp(MyApp());
-
- } else {
-
-  print("Permission not granted");
-
- }
-
-}
-
-```
-
-
-2. Specify parameters: 
-```dart
-String url = "";
-String userId = "abc123";
-String category = "Fitness";
-String planCategory = "Strength"; // for specifying required plan category
-// see other available parameters above
- 
-```
-3. Show Webview: 
-
-```dart
-
-class _MyHomePageState extends State<MyHomePage> {
-  String userId = "abc123";
-  String category = "Fitness";
-  String url = "";
-  bool showWebview = false;
-  InAppWebViewController? _controller;
-
-  late InAppWebViewGroupOptions options;
-
-  @override
-  void initState() {
-    super.initState();
-    url = "https://kineste-x-w.vercel.app/?userId=$userId&planC=$planCategory&category=$category";
-
-    options = InAppWebViewGroupOptions(
-      crossPlatform: InAppWebViewOptions(
-        javaScriptEnabled: true,
-        mediaPlaybackRequiresUserGesture: false,
-      ),
-      android: AndroidInAppWebViewOptions(
-        useHybridComposition: true,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('WebView Camera Access'),
-      ),
-      body: showWebview
-          ? InAppWebView(
-        initialOptions: options,
-        initialUrlRequest: URLRequest(url: Uri.parse(url)),
-        onWebViewCreated: (InAppWebViewController controller) {
-          _controller = controller;
-
-          controller.addJavaScriptHandler(
-            handlerName: 'messageHandler',
-            callback: (args) {
-              handleMessage(args[0]);
-            },
-          );
-        },
-        onLoadStop: (InAppWebViewController controller, Uri? url) async {
-          await controller.evaluateJavascript(source: """
-                  window.addEventListener('message', (event) => {
-                    if (event.data === 'exitApp') {
-                      window.flutter_inappwebview.callHandler('exitApp');
-                    } else {
-                      window.flutter_inappwebview.callHandler('messageHandler', event.data);
-                    }
-                  });
-                """);
-        },
-        onConsoleMessage: (controller, consoleMessage) {
-          print(consoleMessage);
-        },
-        onProgressChanged: (InAppWebViewController controller, int progress) {
-          print("WebView is loading (progress : $progress%)");
-        },
-       // IMPORTANT: HANDLE PERMISSION AT RUN TIME 
-        androidOnPermissionRequest:
-            (InAppWebViewController controller, String origin,
-            List<String> resources) async {
-          return PermissionRequestResponse(
-              resources: resources,
-              action: PermissionRequestResponseAction.GRANT);
-        },
-      )
-          : Center(
-        child: ElevatedButton(
-          onPressed: () {
-            setState(() {
-              showWebview = true;
-            });
-          },
-          child: Text('Start'),
-        ),
-      ),
-    );
-  }
-
-  // handling postMessages from KinesteX. 
-  void handleMessage(String message) {
+1. **Parsing the Message**:
+    ```dart
     var parsedMessage = jsonDecode(message);
+    ```
+    This line decodes the incoming JSON message into a Dart object so that its properties (like 'type' and 'data') can be accessed directly.
 
-    print("Received data: ${parsedMessage['data']}");
-    switch (parsedMessage['type']) {
-      case "finished_workout":
-        // called when user clicks on finish workout button. returns statistics from the exercise
-        print("Received data: ${parsedMessage['data']}");
-        break;
+2. **Switch Statement on Message Type**:
+    The core of the `handleMessage` function is a switch statement that checks the `type` property of the parsed message. Each case corresponds to a different type of action or event that occurred in the KinesteX SDK.
+    
+    - `kinestex_launched`: Logs when the KinesteX SDK is successfully launched.
+    - `workout_opened`: Logs when a workout is opened.
+    - `workout_started`: Logs when a workout is started.
+    - `plan_unlocked`: Logs when a user unlocks a plan.
+    - `finished_workout`: Logs when a workout is finished.
+    - `error_occured`: Logs when there's an error. (Coming soon)
+    - `exercise_completed`: Logs when an exercise is completed.
+    - `exitApp`: Logs when the KinesteX window is closed and sets the `showWebview` to false, which will hide the WebView.
+    - `default`: For all other message types, it just logs the received type and data.
 
-      case "exitApp":
-       // when user clicks on exit button 
-        print("Received data: ${parsedMessage['data']}");
-        if (showWebview) {
-          setState(() {
-            showWebview = false;
-          });
-        }
-        break;
+    Each log entry is added to the `workoutLogs` list, which can be viewed through the app's interface.
 
-      case "error_occured":
-        // called when errors occur on the webpage during the workout
-        print("Received data: ${parsedMessage['data']}");
-        break;
-      
-      case "exercise_completed":
-        // called when user completed the exercise and goes to the next exercise
-        print("Received data: ${parsedMessage['data']}");
-        break;
-    }
-  }
-}
+### postMessage Mechanism:
+
+The `postMessage` mechanism allows the Flutter app to send data to the web content. It's a standard method for web pages to communicate with each other, and it's also a way for embedded web content (like in a WebView) to communicate with the parent application.
+
+#### Mechanism Breakdown:
+
+1. **Setting up the Message**:
+    ```dart
+    window.postMessage(${jsonEncode(postData)}, '*');
+    ```
+    Here, the `postData` map, which contains key-value pairs of data (like userId, category, company, etc.), is encoded into a JSON string and then posted to the web content.
+
+2. **Setting up a Listener in WebView**:
+    ```dart
+    window.addEventListener('message', (event) => {
+      if (event.data === 'exitApp') {
+        window.flutter_inappwebview.callHandler('exitApp');
+      } else {
+        window.flutter_inappwebview.callHandler('messageHandler', event.data);
+      }
+    });
+    ```
+    This JavaScript code adds an event listener to the web content. Whenever the web content posts a message (using its own `postMessage`), this listener picks it up. If the data is 'exitApp', it calls the 'exitApp' handler. For all other data, it calls the 'messageHandler', which in turn triggers the `handleMessage` function in the Flutter code.
 
 
-```
+### User Interface Overview
+
+1. **WebView Interface**: 
+    - When `showWebview` is true, the app displays the `InAppWebView`. 
+    - It's set up to listen for messages, handle loading errors, progress updates, console messages, and also to manage permission requests on Android.
+    
+2. **Form Interface**: 
+    - When `showWebview` is false, the app provides a form-like interface.
+    - You can view and modify post data entries.
+    - There are buttons to add new parameters, start the web view, and view the logs.
+    - Clicking "Logs" brings up a bottom sheet displaying all the logs captured during the session.
+
+### Conclusion
+
+This Flutter implementation integrates the KinesteX SDK within a web view and maintains a logging system for all activities. Proper permission handling is crucial, and it's ensured the camera permission is granted before the app runs. The `handleMessage` function is central to the app's functionality, processing all communications from the web content and updating the logs accordingly. This provides a comprehensive record of user interactions with the KinesteX SDK.
