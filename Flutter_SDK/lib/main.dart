@@ -40,8 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
     "userId": "userrrrabc", // REQUIRED PARAM
     "category": "Rehabilitation",
     "planC": "Cardio",
-    "company": "YOUR COMPANY", // REQUIRED PARAM
-    "key": "YOUR APP KEY" // REQUIRED PARAM
+    "company": "COMPANY", // REQUIRED PARAM
+    "key": "SECRET KEY" // REQUIRED PARAM
   };
   Map<String, TextEditingController> controllers = {};
   late InAppWebViewGroupOptions options;
@@ -72,11 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 // Add below your existing declarations in _MyHomePageState
  return Scaffold(
-      appBar: AppBar(
-        title: Text('WebView Camera Access'),
-      ),
+
       body: showWebview
-            ? InAppWebView(
+            ? SafeArea(child:InAppWebView(
    initialOptions: options,
    initialUrlRequest: URLRequest(url: Uri.parse(url)),
    onWebViewCreated: (InAppWebViewController controller) {
@@ -118,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
      return PermissionRequestResponse(
          resources: resources, action: PermissionRequestResponseAction.GRANT);
    },
- )
+ ))
           : Column(
         children: [
           Expanded(
