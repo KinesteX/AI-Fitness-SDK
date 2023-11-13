@@ -1,3 +1,5 @@
+https://github.com/V-m1r/KinesteXSDK/assets/62508191/a796a98c-55c4-42d5-8ecd-731d2997e488
+
 ## Configuration
 
 #### AndroidManifest.xml
@@ -38,6 +40,7 @@ flutter_inappwebview: ^5.3.2
 | **Strength** | 
 | **Cardio** |
 | **Rehabilitation** | 
+
 
 ### Available categories and sub categories to sort workouts: 
 
@@ -154,6 +157,16 @@ The `postMessage` mechanism allows the Flutter app to send data to the web conte
     - You can view and modify post data entries.
     - There are buttons to add new parameters, start the web view, and view the logs.
     - Clicking "Logs" brings up a bottom sheet displaying all the logs captured during the session.
+
+
+### What to keep in mind:
+
+1. **For best feedback please share with us as much info about user as possible**:
+   -  If you can share user's weight, height, and age that would greatly help us recommend the best plans. 
+    - You can also specify the plans for the user yourselves by choosing the appropriate `planC` value or recommending workouts through `category` parameter.
+    
+2. **Make sure to use correct secret key and company name when openeing the webview**
+
 
 ### Conclusion
 
