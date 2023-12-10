@@ -164,3 +164,6 @@ return (
 See PWA-KinesteX for a demo code
 
 ------------------
+
+## Contact:
+If you have any questions contact: help@kinestex.com
