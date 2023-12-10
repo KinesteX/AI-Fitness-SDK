@@ -161,7 +161,7 @@ return (
   );
 
 ```
-See PWA-KinesteX for a demo code
+See App.js for demo code
 
 ------------------
 
