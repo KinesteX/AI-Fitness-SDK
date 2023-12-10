@@ -138,7 +138,7 @@ To listen to user events:
 
 ------------------
 
-##Displaying KinesteX through iframe:
+## Displaying KinesteX through iframe:
 ```jsx
 return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
