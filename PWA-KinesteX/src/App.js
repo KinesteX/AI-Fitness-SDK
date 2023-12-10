@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const App = () => {
   const [showWebView, setShowWebView] = useState(false);
+
+  const iframeRef = useRef(null);
   const toggleWebView = () => setShowWebView(!showWebView);
 
-  const userId = '123abcd';
-  const age = 25;
-  const gender = 'male';
-  const weight = 70;
-  const sub_category = 'Stay%20Fit';
-  const category = 'Fitness';
+  const postData = {
+    userId: 'userrrrabc',
+    category: 'Fitness',
+    planC: 'Cardio',
+    company: 'Prana',
+    key: 'e36ec5dc3766c92c5628805cf0c6f65a2ac7f37d',
+    age: 50,
+    height: 150, // in cm
+    weight: 200,
+    gender: 'Male'
+  };
 
   const handleMessage = (event) => {
+    
     try {
       if (event.data) {
         const message = JSON.parse(event.data);
@@ -20,17 +28,7 @@ const App = () => {
   
         if (message.type === 'finished_workout') {
           console.log('Received data:', message.data);
-          /*
-          Format of the Received data:
-          {
-            date: "2023-06-09T17:34:49.426Z",
-            totalCalories: "0.96",
-            totalRepeats: 3,
-            totalSeconds: 18,
-            userId: "123abcd",
-            workout: "Fitness Lite"
-          }
-          */
+     
         }
         if (message.type === 'exitApp') {
           toggleWebView();
@@ -41,15 +39,7 @@ const App = () => {
         }
         if (message.type === 'exercise_completed') {
           console.log('Received data:', message.data);
-          /*
-          Format:
-          {
-            exercise: "Overhead Arms Raise",
-            repeats: 20,
-            timeSpent: 30,
-            calories: "5.0"
-          }
-          */
+      
         }
       } else {
         console.log('Received empty message'); // Log if the message is empty
@@ -58,8 +48,6 @@ const App = () => {
       console.error('Could not parse JSON message from WebView:', e);
     }
   };
-  
-
   useEffect(() => {
     const handleWindowMessage = (event) => {
       handleMessage(event);
@@ -70,60 +58,33 @@ const App = () => {
     return () => {
       window.removeEventListener('message', handleWindowMessage);
     };
-  }, [toggleWebView]); // <- Add toggleWebView here
+  }, [toggleWebView]); 
 
+
+
+  useEffect(() => {
+    if (showWebView && iframeRef.current) {
+      // Ensure the iframe is loaded before posting the message
+      iframeRef.current.onload = () => {
+        iframeRef.current.contentWindow.postMessage(postData, '*'); // Specify the target origin as needed
+      };
+    }
+  }, [showWebView]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-      }}
-    >
-      {!showWebView && (
-        <button
-          style={{
-            padding: '20px 40px',
-            fontSize: '24px',
-            backgroundColor: '#000000',
-            color: '#ffffff',
-            border: 'none',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: '1',
-          }}
-          onClick={toggleWebView}
-        >
-          Open WebView
-        </button>
-      )}
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      {!showWebView && <button onClick={toggleWebView}>Open WebView</button>} {/* CUSTOM BUTTON TO LAUNCH KINESTEX */}
       {showWebView && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            zIndex: '0',
-          }}
-        >
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', zIndex: '0' }}>
           <iframe
-            src={`https://kineste-x-w.vercel.app?userId=${userId}&age=${age}&gender=${gender}&weight=${weight}&sub_category=${sub_category}&category=${category}`}
+            ref={iframeRef}
+            src="https://kinestex-sdk-git-redesign-v-m1r.vercel.app/"
             frameBorder="0"
             allow="camera; microphone; autoplay"
             sandbox="allow-same-origin allow-scripts"
             allowFullScreen={true}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
+            javaScriptEnabled={true}
+            style={{ width: '100%', height: '100%' }}
           ></iframe>
         </div>
       )}
