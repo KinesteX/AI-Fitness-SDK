@@ -1,1 +1,1 @@
-### REFER TO PROJECT FOLDERS FOR EXAMPLES AND DOCUMENTATION
+### Refer to project folders for examples and documentation
