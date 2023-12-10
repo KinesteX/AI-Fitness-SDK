@@ -70,7 +70,7 @@ When presenting iframe, share the data in the following way:
     if (showWebView && iframeRef.current) {
       // Ensure the iframe is loaded before posting the message
       iframeRef.current.onload = () => {
-        iframeRef.current.contentWindow.postMessage(postData, '*'); // Specify the target origin as needed
+        iframeRef.current.contentWindow.postMessage(postData, '*'); // Current post message source target, we will make it more secure later
       };
     }
   }, [showWebView]);
