@@ -57,7 +57,7 @@ Add the following keys for camera and microphone usage:
     planC: 'Cardio',
     age: 50,
     height: 150, // in cm
-    weight: 200,
+    weight: 200, // in kg
     gender: 'Male'
   };
 ```
