@@ -1,3 +1,4 @@
+https://github.com/V-m1r/KinesteXSDK/assets/62508191/a796a98c-55c4-42d5-8ecd-731d2997e488
 
 This guide will walk you through the installation and configuration of the WebView component for integrating KinesteX plans and workouts into your app.
 
