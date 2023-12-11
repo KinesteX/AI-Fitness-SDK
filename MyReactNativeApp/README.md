@@ -27,6 +27,13 @@ Add the following keys for camera and microphone usage:
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone access is required for video streaming.</string>
 ```
+#### WebView library
+
+Install `react-native-webview` webview:
+
+```
+npm i react-native-webview
+```
 
 ### Available categories to sort plans (param key is planC): 
 
@@ -64,17 +71,26 @@ Add the following keys for camera and microphone usage:
 ### Communicating with KinesteX:
 Currently supported communication is via HTTP postMessages. 
 
-When presenting iframe, share the data in the following way: 
+When presenting webview, share the data in the following way: 
 
 ```jsx
-  useEffect(() => {
-    if (showWebView && iframeRef.current) {
-      // Ensure the iframe is loaded before posting the message
-      iframeRef.current.onload = () => {
-        iframeRef.current.contentWindow.postMessage(postData, '*'); // Current post message source target, we will make it more secure later
-      };
-    }
-  }, [showWebView]);
+const sendPostData = () => {
+  if (webViewRef.current) {
+    const script = `
+      window.postMessage(${JSON.stringify(postData)}, '*');
+      true; // Note: true is required, or you'll sometimes get silent failures
+    `;
+    webViewRef.current.injectJavaScript(script);
+  }
+};
+// sending message when webview loads:
+<WebView
+       ref={webViewRef}
+       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       onLoadEnd={() => sendPostData()}
+       originWhitelist={['*']}
+       ... other config (see below)
+     />
 
 ```
 
@@ -82,48 +98,33 @@ When presenting iframe, share the data in the following way:
 To listen to user events: 
 
   ```jsx
-  const handleMessage = (event) => {
-    
-    try {
-      if (event.data) {
-        const message = JSON.parse(event.data);
-  
-        console.log('Received data:', message); // Log the received data
-  
-        if (message.type === 'finished_workout') {
-          console.log('Received data:', message.data);
+    const handleMessage = (event: WebViewMessageEvent) => {
+  try {
+    const message = JSON.parse(event.nativeEvent.data);
+
+    if (message.type === "finished_workout") {
+      console.log("Received data:", message.data);
+      // Process the received data as needed
      
-        }
-        if (message.type === 'exitApp') {
-          toggleWebView();
-        }
-        if (message.type === 'error_occured') {
-          console.log('Received data:', message.data);
-          toggleWebView();
-        }
-        if (message.type === 'exercise_completed') {
-          console.log('Received data:', message.data);
-      
-        }
-      } else {
-        console.log('Received empty message'); // Log if the message is empty
-      }
-    } catch (e) {
-      console.error('Could not parse JSON message from WebView:', e);
     }
-  };
-  useEffect(() => {
-    const handleWindowMessage = (event) => {
-      handleMessage(event);
-    };
+    if (message.type === "exitApp"){
+      console.log("EXITING: ", "EXIT");
+      toggleWebView();
+    }
+  } catch (e) {
+    console.error("Could not parse JSON message from WebView:", e);
+  }
+};
 
-    window.addEventListener('message', handleWindowMessage);
-
-    return () => {
-      window.removeEventListener('message', handleWindowMessage);
-    };
-  }, [toggleWebView]); 
-
+// adding listener to webview library:
+return (
+<WebView
+       ref={webViewRef}
+       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       onMessage={handleMessage}
+       ... other configuration (see below)
+     />
+)
 ```
  **Message Types in handleMessage function**:
     The core of the `handleMessage` function is a switch statement that checks the `type` property of the parsed message. Each case corresponds to a different type of action or event that occurred in the KinesteX SDK.
@@ -139,30 +140,27 @@ To listen to user events:
 
 ------------------
 
-## Displaying KinesteX through iframe:
+## Displaying KinesteX through webview:
 ```jsx
-return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      {!showWebView && <button onClick={toggleWebView}>Open WebView</button>} {/* CUSTOM BUTTON TO LAUNCH KINESTEX */}
-      {showWebView && (
-        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', zIndex: '0' }}>
-          <iframe
-            ref={iframeRef}
-            src="https://kinestex-sdk-git-redesign-v-m1r.vercel.app/"
-            frameBorder="0"
-            allow="camera; microphone; autoplay"
-            sandbox="allow-same-origin allow-scripts"
-            allowFullScreen={true}
-            javaScriptEnabled={true}
-            style={{ width: '100%', height: '100%' }}
-          ></iframe>
-        </div>
-      )}
-    </div>
-  );
-
+<WebView
+       ref={webViewRef}
+       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       style={styles.webView}
+       allowsFullscreenVideo={true}
+       mediaPlaybackRequiresUserAction={false}
+       onMessage={handleMessage}
+       javaScriptEnabled={true}
+       onLoadEnd={() => sendPostData()}
+       originWhitelist={['*']}
+       mixedContentMode="always"
+       debuggingEnabled={true}
+       allowFileAccessFromFileURLs={true}
+       allowUniversalAccessFromFileURLs={true}
+       allowsInlineMediaPlayback={true}
+       geolocationEnabled={true}
+     />
 ```
-See App.js for demo code
+See App.tsx for demo code
 
 ------------------
 
