@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, SafeAreaView, StyleSheet } from 'react-native';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
 const App = () => {
   const [showWebView, setShowWebView] = useState(false);
-
+  const webViewRef = useRef(null);
   const toggleWebView = () => {
     setShowWebView(!showWebView);
   };
 
-  const userId = 'user1';
+  const postData = {
+    userId: 'userrrrabc',
+    category: 'Fitness',
+    planC: 'Strength',
+    company: 'YOUR COMPANY NAME',
+    key: 'YOUR COMPANY CODE',
+    age: 50,
+    height: 150, // in cm
+    weight: 200,
+    gender: 'Male'
+  };
+  const injectedJavaScript = `
+    window.postMessage(JSON.stringify(${JSON.stringify(postData)}), '*');
+    true; // Note: 'true' is required to avoid silent failures
+  `;
+
 
   const handleMessage = (event: WebViewMessageEvent) => {
   try {
@@ -29,6 +44,15 @@ const App = () => {
   }
 };
 
+const sendPostData = () => {
+  if (webViewRef.current) {
+    const script = `
+      window.postMessage(${JSON.stringify(postData)}, '*');
+      true; // Note: true is required, or you'll sometimes get silent failures
+    `;
+    webViewRef.current.injectJavaScript(script);
+  }
+};
   return (
     <SafeAreaView style={styles.container}>
       {!showWebView && (
@@ -36,21 +60,23 @@ const App = () => {
         
       )}
       {showWebView && (
-        <WebView
-          source={{ uri: `https://kineste-x-w.vercel.app?id=${userId}` }}
-         style={styles.webView}
-  allowsFullscreenVideo={true}
-  mediaPlaybackRequiresUserAction={false}
-  onMessage={handleMessage}
-  javaScriptEnabled={true}
-  originWhitelist={['*']}
-  mixedContentMode="always"
-  debuggingEnabled={true}
-  allowFileAccessFromFileURLs={true}
-  allowUniversalAccessFromFileURLs={true}
-  allowsInlineMediaPlayback={true}
-  geolocationEnabled={true}
-        />
+       <WebView
+       ref={webViewRef}
+       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       style={styles.webView}
+       allowsFullscreenVideo={true}
+       mediaPlaybackRequiresUserAction={false}
+       onMessage={handleMessage}
+       javaScriptEnabled={true}
+       onLoadEnd={() => sendPostData()}
+       originWhitelist={['*']}
+       mixedContentMode="always"
+       debuggingEnabled={true}
+       allowFileAccessFromFileURLs={true}
+       allowUniversalAccessFromFileURLs={true}
+       allowsInlineMediaPlayback={true}
+       geolocationEnabled={true}
+     />
       )}
     </SafeAreaView>
   );
