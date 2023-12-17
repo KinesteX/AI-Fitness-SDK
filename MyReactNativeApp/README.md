@@ -74,6 +74,8 @@ Currently supported communication is via HTTP postMessages.
 When presenting webview, share the data in the following way: 
 
 ```jsx
+const url = 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app';
+
 const sendPostData = () => {
   if (webViewRef.current) {
     const script = `
@@ -86,9 +88,9 @@ const sendPostData = () => {
 // sending message when webview loads:
 <WebView
        ref={webViewRef}
-       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       source={{ uri: url }}
        onLoadEnd={() => sendPostData()}
-       originWhitelist={['https://kinestex-sdk-git-redesign-v-m1r.vercel.app']}
+       originWhitelist={[url]}
        ... other config (see below)
      />
 
