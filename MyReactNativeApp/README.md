@@ -122,7 +122,7 @@ To listen to user events:
 return (
 <WebView
        ref={webViewRef}
-       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       source={{ uri: url }}
        onMessage={handleMessage}
        ... other configuration (see below)
      />
