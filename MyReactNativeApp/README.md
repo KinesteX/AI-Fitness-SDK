@@ -58,7 +58,7 @@ npm i react-native-webview
 // REQUIRED
     userId: 'YOUR USER ID',
     company: 'YOUR COMPANY', // contact KinesteX
-    key: 'YOUR KEY', // contact KinesteX
+    key: apiKey, // STORE KEY SECURELY. WE RECOMMEND STORING AND RETRIEVING IT FROM YOUR DATABASE
 // OPTIONAL
     category: 'Fitness',
     planC: 'Cardio',
