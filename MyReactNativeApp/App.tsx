@@ -9,6 +9,8 @@ const App = () => {
     setShowWebView(!showWebView);
   };
 
+  const url = 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/';
+
   const postData = {
     userId: 'userrrrabc',
     category: 'Fitness',
@@ -20,11 +22,6 @@ const App = () => {
     weight: 200,
     gender: 'Male'
   };
-  const injectedJavaScript = `
-    window.postMessage(JSON.stringify(${JSON.stringify(postData)}), '*');
-    true; // Note: 'true' is required to avoid silent failures
-  `;
-
 
   const handleMessage = (event: WebViewMessageEvent) => {
   try {
@@ -47,7 +44,7 @@ const App = () => {
 const sendPostData = () => {
   if (webViewRef.current) {
     const script = `
-      window.postMessage(${JSON.stringify(postData)}, '*');
+      window.postMessage(${JSON.stringify(postData)}, 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app');
       true; // Note: true is required, or you'll sometimes get silent failures
     `;
     webViewRef.current.injectJavaScript(script);
@@ -62,20 +59,19 @@ const sendPostData = () => {
       {showWebView && (
        <WebView
        ref={webViewRef}
-       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       source={{ uri: url }}
        style={styles.webView}
        allowsFullscreenVideo={true}
        mediaPlaybackRequiresUserAction={false}
        onMessage={handleMessage}
        javaScriptEnabled={true}
        onLoadEnd={() => sendPostData()}
-       originWhitelist={['*']}
+       originWhitelist={[url]}
        mixedContentMode="always"
-       debuggingEnabled={true}
+       debuggingEnabled={true} // remove for production release
        allowFileAccessFromFileURLs={true}
        allowUniversalAccessFromFileURLs={true}
        allowsInlineMediaPlayback={true}
-       geolocationEnabled={true}
      />
       )}
     </SafeAreaView>
