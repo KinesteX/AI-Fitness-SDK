@@ -77,7 +77,7 @@ When presenting webview, share the data in the following way:
 const sendPostData = () => {
   if (webViewRef.current) {
     const script = `
-      window.postMessage(${JSON.stringify(postData)}, '*');
+      window.postMessage(${JSON.stringify(postData)}, 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app');
       true; // Note: true is required, or you'll sometimes get silent failures
     `;
     webViewRef.current.injectJavaScript(script);
@@ -88,7 +88,7 @@ const sendPostData = () => {
        ref={webViewRef}
        source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
        onLoadEnd={() => sendPostData()}
-       originWhitelist={['*']}
+       originWhitelist={['https://kinestex-sdk-git-redesign-v-m1r.vercel.app']}
        ... other config (see below)
      />
 
@@ -142,22 +142,20 @@ return (
 
 ## Displaying KinesteX through webview:
 ```jsx
-<WebView
+  <WebView
        ref={webViewRef}
-       source={{ uri: 'https://kinestex-sdk-git-redesign-v-m1r.vercel.app/' }}
+       source={{ uri: url }}
        style={styles.webView}
        allowsFullscreenVideo={true}
        mediaPlaybackRequiresUserAction={false}
        onMessage={handleMessage}
        javaScriptEnabled={true}
        onLoadEnd={() => sendPostData()}
-       originWhitelist={['*']}
+       originWhitelist={[url]}
        mixedContentMode="always"
-       debuggingEnabled={true}
        allowFileAccessFromFileURLs={true}
        allowUniversalAccessFromFileURLs={true}
        allowsInlineMediaPlayback={true}
-       geolocationEnabled={true}
      />
 ```
 See App.tsx for demo code
