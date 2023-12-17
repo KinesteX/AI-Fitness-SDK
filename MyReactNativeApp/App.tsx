@@ -16,7 +16,7 @@ const App = () => {
     category: 'Fitness',
     planC: 'Strength',
     company: 'YOUR COMPANY NAME',
-    key: 'YOUR COMPANY CODE',
+    key: apiKey, // STORE KEY SECURELY. WE RECOMMEND STORING AND RETRIEVING IT FROM YOUR DATABASE
     age: 50,
     height: 150, // in cm
     weight: 200,
