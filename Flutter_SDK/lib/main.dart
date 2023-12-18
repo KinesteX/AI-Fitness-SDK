@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   InAppWebViewController? _controller;
   Map<String, String> postData = {
     "userId": "userrrrabc", // REQUIRED PARAM
-    "category": "Rehabilitation",
+    "category": "Fitness",
     "planC": "Cardio",
     "company": "COMPANY", // REQUIRED PARAM
     "key": apiKey // REQUIRED PARAM, WE RECOMMEND STORING IT IN THE DATABASE AND ACCESSING AT RUNTIME 
