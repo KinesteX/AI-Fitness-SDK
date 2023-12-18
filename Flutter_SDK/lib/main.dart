@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "category": "Rehabilitation",
     "planC": "Cardio",
     "company": "COMPANY", // REQUIRED PARAM
-    "key": "SECRET KEY" // REQUIRED PARAM
+    "key": apiKey // REQUIRED PARAM, WE RECOMMEND STORING IT IN THE DATABASE AND ACCESSING AT RUNTIME 
   };
   Map<String, TextEditingController> controllers = {};
   late InAppWebViewGroupOptions options;
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
    },
    onLoadStop: (InAppWebViewController controller, Uri? url) async {
      await controller.evaluateJavascript(source: """
-     window.postMessage(${jsonEncode(postData)}, '*');
+     window.postMessage(${jsonEncode(postData)}, "${fullUrl}");
   """);
      await controller.evaluateJavascript(source: """
                     window.addEventListener('message', (event) => {
