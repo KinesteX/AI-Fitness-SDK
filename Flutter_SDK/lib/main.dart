@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
    },
    onLoadStop: (InAppWebViewController controller, Uri? url) async {
      await controller.evaluateJavascript(source: """
-     window.postMessage(${jsonEncode(postData)}, "${fullUrl}");
+     window.postMessage(${jsonEncode(postData)}, "${url}");
   """);
      await controller.evaluateJavascript(source: """
                     window.addEventListener('message', (event) => {
