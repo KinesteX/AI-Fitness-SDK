@@ -73,6 +73,8 @@ This guide provides a detailed walkthrough of the Flutter code that integrates a
 
 - The core of the app is `MyApp` which sets the `MyHomePage` as the home.
 
+Example code: https://github.com/V-m1r/KinesteXSDK/blob/main/Flutter_SDK/lib/main.dart
+
 ### Home Page Overview
 
 1. **State Initialization**: 
