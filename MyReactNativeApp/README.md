@@ -49,10 +49,10 @@ Pleae note that the default plan category is Strength and all of the plans will 
 
 ### Available categories and sub categories to sort workouts: 
 
-| **Category (key: category)** | **Sub-category (key: sub_category)** |
-| --- | --- |
-| **Fitness** | Stay Fit, Stretching, Cardio |
-| **Rehabilitation** | Back Relief, Knee Therapy, Neck Relief |
+| **Category (key: category)** |
+| --- | 
+| **Fitness** | 
+| **Rehabilitation** | 
 
 
 ## Available parameters:
