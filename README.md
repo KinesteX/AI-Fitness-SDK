@@ -3,7 +3,7 @@
 ### To access our services you will need to: 
 - Send us an email to [support@kinestex.com](mailto:support@kinestex.com)
 - In the email subject write: B2B Demo Access
-- In the email body include any supporting details (company name, any questions, etc.)
+- In the email body include any supporting details (company / project name, site, etc.)
 
 -------
 
