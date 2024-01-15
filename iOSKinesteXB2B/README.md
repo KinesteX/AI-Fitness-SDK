@@ -238,7 +238,7 @@ if viewModel.showWebView {
 
 2. **Communicating Data**: 
    - `ContentViewModel` handles receiving data from KinesteX and  `WebView` handles passing it:
-```
+```Swift
 func handle(message: String) {
            guard let data = message.data(using: .utf8),
                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -302,7 +302,7 @@ func handle(message: String) {
 
    
 - `Webview` sends data through the java script post message injection: 
-```
+```Swift
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             
             // Webview init complete, displaying KinesteX
