@@ -1,5 +1,9 @@
 # KinesteX B2B is an Embeddable Solution that works through WebView
 
+### Presentation of Webview varies, so we made sure to give examples of how you may handle displaying KinesteX
+
+### [Available data points](https://kinestex.notion.site/KinesteX-B2B-Data-Sharing-cdc592019d8045708c36889cb0c4e774?pvs=74)
+
 ### To access our services you will need to: 
 - Send us an email to [support@kinestex.com](mailto:support@kinestex.com)
 - In the email subject write: B2B Demo Access
