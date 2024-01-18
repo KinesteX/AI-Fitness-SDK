@@ -15,7 +15,6 @@
 Refer to project folders for examples and explanation based on your programming language:
 
 - **For Flutter:** [Click here](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/Flutter_SDK)
-- **For Swift:** [Click here](link-to-your-flutter-page)
-- **For Kotlin:** [Click here](link-to-your-flutter-page)
+- **For Swift:** [Click here](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/iOSKinesteXB2B)
 - **For React Native:** [Click here](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/MyReactNativeApp)
 - **For React Progressive Web App:** [Click here](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/PWA-KinesteX)
