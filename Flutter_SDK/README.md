@@ -49,7 +49,7 @@ flutter_inappwebview: ^5.3.2
 | **Fitness** |
 | **Rehabilitation** | 
 
-## WebView Camera Access in Flutter with KinesteX SDK
+## WebView Camera Access in Flutter with KinesteX AI
 
 This guide provides a detailed walkthrough of the Flutter code that integrates a web view with camera access and communicates with KinesteX. 
 
@@ -172,4 +172,4 @@ The `postMessage` mechanism allows the Flutter app to send data to the web conte
 
 ### Conclusion
 
-This Flutter implementation integrates the KinesteX SDK within a web view and maintains a logging system for all activities. Proper permission handling is crucial, and it's ensured the camera permission is granted before the app runs. The `handleMessage` function is central to the app's functionality, processing all communications from the web content and updating the logs accordingly. This provides a comprehensive record of user interactions with KinesteX AI.
+This Flutter implementation integrates the KinesteX AI within a web view and maintains a logging system for all activities. Proper permission handling is crucial, and it's ensured the camera permission is granted before the app runs. The `handleMessage` function is central to the app's functionality, processing all communications from the web content and updating the logs accordingly. This provides a comprehensive record of user interactions with KinesteX AI.
