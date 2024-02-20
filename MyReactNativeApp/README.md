@@ -72,7 +72,7 @@ Pleae note that the default plan category is Strength and all of the plans will 
   };
 ```
 ### Communicating with KinesteX:
-Currently supported communication is via HTTP postMessages. 
+Currently supported communication is via HTTPS postMessages. 
 
 When presenting webview, share the data in the following way: 
 
