@@ -27,4 +27,4 @@ Refer to packages based on your programming language:
 - **For React Native:** [Click here](https://www.npmjs.com/package/kinestex-sdk-react-native)
 - **For React Progressive Web App:** [Click here](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/PWA-KinesteX)
 
-Questions == support@kinestex.com
+For any questions, please contact: support@kinestex.com
