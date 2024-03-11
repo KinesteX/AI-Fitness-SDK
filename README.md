@@ -1,4 +1,4 @@
-# [KineseX AI](https://kinestex.com)
+# [KinesteX AI](https://kinestex.com)
 ## INTEGRATE AI TRAINER IN YOUR APP IN MINUTES
 ### Easily transform your platform with our SDK: white-labeled workouts with precise motion tracking and real-time feedback tailored for accuracy and engagement
 
