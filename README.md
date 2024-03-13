@@ -21,10 +21,10 @@ Or, alternatively:
 
 # Once you have contacted us, you may
 Refer to packages based on your programming language:
-
 - [**For Flutter**](https://github.com/V-m1r/KinesteXFlutterDemo)
-- [**For Swift**](https://github.com/V-m1r/KinesteXAIWebView)
 - [**For React Native**](https://github.com/V-m1r/KinesteXReactNativeDemo)
+- [**For Swift**](https://github.com/V-m1r/KinesteXAIWebView)
+- [**For Kotlin**](https://github.com/V-m1r/KinesteXSDKKotlin)
 - [**For React Progressive Web App**](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/PWA-KinesteX)
 
 For any questions, please contact: support@kinestex.com
