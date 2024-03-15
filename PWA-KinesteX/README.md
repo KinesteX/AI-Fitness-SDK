@@ -35,14 +35,15 @@ Add the following keys for camera and microphone usage:
 | **Strength** | 
 | **Cardio** |
 | **Rehabilitation** | 
+| **Weight Management** | 
 
 
 ### Available categories and sub categories to sort workouts: 
 
-| **Category (key: category)** | **Sub-category (key: sub_category)** |
-| --- | --- |
-| **Fitness** | Stay Fit, Stretching, Cardio |
-| **Rehabilitation** | Back Relief, Knee Therapy, Neck Relief |
+| **Category (key: category)** | 
+| --- | 
+| **Fitness** | 
+| **Rehabilitation** |
 
 
 ## Available parameters:
