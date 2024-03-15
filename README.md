@@ -46,6 +46,7 @@ Refer to packages based on your programming language:
 - [**For React Native**](https://github.com/V-m1r/KinesteXReactNativeDemo)
 - [**For Swift**](https://github.com/V-m1r/KinesteXAIWebView)
 - [**For Kotlin**](https://github.com/V-m1r/KinesteXSDKKotlin)
+- [**For HTML & JS**](https://github.com/V-m1r/KinesteX-B2B-JS)
 - [**For React Progressive Web App**](https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/tree/main/PWA-KinesteX)
 
 For any questions, please contact: support@kinestex.com
